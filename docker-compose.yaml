@@ -1,0 +1,39 @@
+services:
+  airflow:
+    build: ./airflow
+    container_name: airflow
+    user: "airflow"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW_USER=${AIRFLOW_USER}
+      - AIRFLOW_PASSWORD=${AIRFLOW_PASSWORD}
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+    command:  >
+      bash -c "
+        airflow db init &&
+        airflow users list | grep -q ${AIRFLOW_USER} ||
+        airflow users create \
+          --username ${AIRFLOW_USER} \
+          --firstname Air \
+          --lastname Flow \
+          --role Admin \
+          --email admin@example.com \
+          --password ${AIRFLOW_PASSWORD} &&
+        airflow scheduler & airflow webserver --workers 1"
+    ports:
+      - "8081:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data:/usr/share/nginx/html/data
+    depends_on:
+      - airflow
