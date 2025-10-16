@@ -1,8 +1,0 @@
-pandas
-requests
-psycopg2-binary
-
-apache-airflow-providers-celery
-celery
-redis
-flower

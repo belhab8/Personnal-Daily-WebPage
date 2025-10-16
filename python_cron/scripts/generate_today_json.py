@@ -2,19 +2,11 @@ import os
 import requests
 import json
 import datetime
-import sqlite3
 import pandas as pd
 import random
 
-from airflow import DAG
-from airflow.utils.dates import days_ago
-from airflow.operators.python import PythonOperator
 
-
-db_path = "/opt/airflow/data/daily.db"
-json_path = "/opt/airflow/data/data.json"
-#conn = sqlite3.connect(db_path)
-#cursor = conn.cursor()
+json_path = "/app/data/today.json"
 
 def get_data():
     kanye_url = "https://api.kanye.rest"
@@ -65,7 +57,6 @@ def get_data():
                     'photographer': 'N/A'}
                 flag = True
                 break
-        print(planeOTD)
     
     today = datetime.datetime.today().strftime('%d-%m-%Y')
     content = {
@@ -74,43 +65,17 @@ def get_data():
         "catFact": catFactOTD,
         "catImg": catImgOTD,
         "plane": planeOTD}
-    print(content)
     return {'content': content, 'filename' : f'data_{today}.json'}
 
-def ingest_data(**kwargs):
-    ti=kwargs['ti']
-    data = ti.xcom_pull(task_ids='get_data_task')
-    content = pd.DataFrame(data['content'])
-    #cursor.execute('''
-    #                   CREATE TABLE IF NOT EXISTS daily_data (
-    #                   date VARCHAR PRIMARY KEY,
-    #                   kanye VARCHAR,
-    #                   catFact VARCHAR,
-    #                   catImg VARCHAR,
-    #                   plane VARCHAR
-    #                   )''')
-    #conn.commit()
-    #content.to_sql('daily_data',conn, if_exists='replace',index=False)
-    #conn.commit()
-    #conn.close()
-    with open(json_path, "w") as f:
-        json.dump(content, f)
+def ingest_data(file):
+    data = file['content']
+    content = pd.DataFrame([data])
+    os.makedirs('/app/data',exist_ok=True)
+    #content.iloc[0].to_json(f"/app/data/{file['filename']}",indent=2,force_ascii=False)
+    record = content.iloc[0].to_dict()
+    with open(f"/app/data/today.json", "w", encoding="utf-8") as f:
+        json.dump(record, f, ensure_ascii=False, indent=2)
 
-
-local_dag = DAG (
-    "DAG-Data_to_DB",
-    schedule_interval="0 4 * * *",
-    start_date=days_ago(1),
-)
-
-with local_dag:
-
-    get_data_task = PythonOperator(
-        task_id="get_data_task",
-        python_callable=get_data
-    )
-    ingest_task = PythonOperator(
-        task_id="ingest_task",
-        python_callable=ingest_data
-    )
-    get_data_task >> ingest_task
+if __name__ == '__main__':
+    data = get_data()
+    ingest_data(data)

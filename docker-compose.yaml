@@ -1,33 +1,39 @@
 services:
-  airflow:
-    build: ./airflow
-    container_name: airflow
-    user: "airflow"
-    environment:
-      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
-      - AIRFLOW_USER=${AIRFLOW_USER}
-      - AIRFLOW_PASSWORD=${AIRFLOW_PASSWORD}
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
-
-    volumes:
-      - ./airflow/dags:/opt/airflow/dags
-      - ./data:/opt/airflow/data
-    command:  >
-      bash -c "
-        airflow db init &&
-        airflow users list | grep -q ${AIRFLOW_USER} ||
-        airflow users create \
-          --username ${AIRFLOW_USER} \
-          --firstname Air \
-          --lastname Flow \
-          --role Admin \
-          --email admin@example.com \
-          --password ${AIRFLOW_PASSWORD} &&
-        airflow scheduler & airflow webserver --workers 1"
-    ports:
-      - "8081:8080"
-
+#  airflow:
+#    build: ./airflow
+#    container_name: airflow
+#    user: "airflow"
+#    environment:
+#      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+#      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+#      - AIRFLOW_USER=${AIRFLOW_USER}
+#      - AIRFLOW_PASSWORD=${AIRFLOW_PASSWORD}
+#      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+#      - AIRFLOW__WEBSERVER__SECRET__KEY=${AIRFLOW_WEBSERVER_KEY}
+#    volumes:
+#      - ./airflow/dags:/opt/airflow/dags
+#      - ./data:/opt/airflow/data
+#    command:  >
+#      bash -c "
+#        airflow db init;
+#        airflow users create \
+#          --username ${AIRFLOW_USER} \
+#          --firstname Air \
+#          --lastname Flow \
+#          --role Admin \
+#          --email admin@example.com \
+#          --password ${AIRFLOW_PASSWORD};
+#        airflow scheduler & exec airflow webserver --workers 1"
+#    ports:
+#      - "8081:8080"
+  daily-job:
+      build: ./python_cron
+      container_name: daily-job
+      environment:
+        - AVIATIONSTACK_API_KEY=${AVIATIONSTACK_API_KEY}
+      volumes:
+        - ./data:/app/data
+      restart: unless-stopped
   frontend:
     build: ./frontend
     container_name: frontend
@@ -35,5 +41,5 @@ services:
       - "8080:80"
     volumes:
       - ./data:/usr/share/nginx/html/data
-    depends_on:
-      - airflow
+    #depends_on:
+    #  - airflow
