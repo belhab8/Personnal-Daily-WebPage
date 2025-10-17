@@ -4,10 +4,8 @@ import json
 import datetime
 import pandas as pd
 import random
-#from dotenv import load_dotenv
 from supabase import create_client, Client
 
-#load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 json_path = "/app/data/today.json"
 
 def get_data():
@@ -29,7 +27,6 @@ def get_data():
         plane_info = requests.get(full_url).json()['data'][0]
         code = plane_info['registration_number']
         planeImgOTD = requests.get(plane_img_url + code).json()
-        print(planeImgOTD)
         try:
             flag = True
             planeOTD = {
@@ -75,16 +72,16 @@ def ingest_data(file):
     record = content.iloc[0].to_dict()
     os.makedirs('/app/data',exist_ok=True)
     local_path = '/app/data/today.json'
+    print('Record OTD : ', record)
     with open(local_path, 'w', encoding='utf-8') as f:
         json.dump(record, f, ensure_ascii=False, indent=2)
     with open(local_path, "rb") as f:
         res_today = (
             supabase.storage
             .from_("today-json")
-            .upload(
+            .update(
                 file=f,
-                path="today.json",
-                file_options={"upsert": "true"}
+                path="today.json"
             )
         )
     with open(local_path, "rb") as f:
@@ -99,14 +96,11 @@ def ingest_data(file):
         )
     print("upload today.json : ", res_today)
     print(f"upload {file['filename']} : ", res_date)
-    #with open("/app/data/today.json", "w", encoding="utf-8") as f:
-    #    json.dump(record, f, ensure_ascii=False, indent=2)
-    #with open(f"/app/data/{file['filename']}.json", "w", encoding="utf-8") as f:
-    #    json.dump(record, f, ensure_ascii=False, indent=2)
 
 if __name__ == '__main__':
     url = os.getenv("SUPABASE_URL")
     key = os.getenv("SUPABASE_KEY")
-    print(url)
     supabase = create_client(supabase_url=url, supabase_key=key)
+    print("Supa Client created : ", supabase)
     data = get_data()
+    ingest_data(data)
