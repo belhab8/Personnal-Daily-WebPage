@@ -1,7 +1,18 @@
 {
-  "date":"16-10-2025",
-  "kanye":"The media tries to kill our heroes one at a time",
-  "catFact":"Almost 10% of a cat's bones are in its tail, and the tail is used to maintain balance.",
-  "catImg":"https:\/\/cataas.com\/cat\/K2tkCwJsYodPFVyq?position=center",
-  "plane":"3"
+  "date": "17-10-2025",
+  "kanye": "Keep your nose out the sky, keep your heart to god, and keep your face to the rising sun.",
+  "catFact": "Cats can be taught to walk on a leash, but a lot of time and patience is required to teach them. The younger the cat is, the easier it will be for them to learn.",
+  "catImg": "https://cataas.com/cat/vJTtnaIjLLRTkJRR?position=center",
+  "plane": {
+    "engines_count": "2",
+    "engines_type": "JET",
+    "first_flight_date": "1999-12-31T23:00:00.000Z",
+    "owner": "Wells Fargo Bank Northwest NA Trustee",
+    "registration_number": "ZS-TFL",
+    "model": "ERJ 135LR",
+    "production_line": "Embraer ERJ-135/ERJ-",
+    "status": "active",
+    "image": "https://t.plnspttrs.net/07042/1462674_7de028042e_280.jpg",
+    "photographer": "Gerrit Griem"
+  }
 }

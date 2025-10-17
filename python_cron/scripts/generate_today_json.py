@@ -71,9 +71,10 @@ def ingest_data(file):
     data = file['content']
     content = pd.DataFrame([data])
     os.makedirs('/app/data',exist_ok=True)
-    #content.iloc[0].to_json(f"/app/data/{file['filename']}",indent=2,force_ascii=False)
     record = content.iloc[0].to_dict()
-    with open(f"/app/data/today.json", "w", encoding="utf-8") as f:
+    with open("/app/data/today.json", "w", encoding="utf-8") as f:
+        json.dump(record, f, ensure_ascii=False, indent=2)
+    with open(f"/app/data/{file['filename']}.json", "w", encoding="utf-8") as f:
         json.dump(record, f, ensure_ascii=False, indent=2)
 
 if __name__ == '__main__':

@@ -1,14 +1,73 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Les Actus du Jour</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src="script.js" defer></script>
-    </head>
-    <body>
-        <h1>Ah oui oui les actus</h1>
-        <p id="data"></p>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Actus du Jour</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <h1 id="titre">Ah oui oui les actus</h1>
+    <div class="scroller" aria-label="Actualités du jour — navigation horizontale">
+        <section class="card">
+            <p>La citation du jour de celui qui a fait Graduation :</p>
+            <fieldset id="kanye"></fieldset>
+        </section>
+
+        <section class="card">
+            <p>Le cat fact et sa photo du jour :</p>
+            <fieldset>
+                <p id="catFact"></p>
+                <img id="catImg">
+            </fieldset>
+        </section>
+
+        <section class="card">
+            <p>L'avion du jour :</p>
+            <fieldset>
+                <figure>
+                    <img id="plane">
+                    <figcaption id='photographer'></figcaption>
+                </figure>
+                <button id="deployInfo"
+                    onclick="document.getElementById('planeInfo').style.display = 'block';document.getElementById('deployInfo').style.display = 'none';">Afficher
+                    les infos (essaye de devenir d'abooooord)</button>
+                <table id="planeInfo" style="display: none;">
+                    <tr>
+                        <th>Modèle</th>
+                        <td id="model"></td>
+                    </tr>
+                    <tr>
+                        <th>Ligne de Production</th>
+                        <td id="production_line"></td>
+                    </tr>
+                    <tr>
+                        <th>Immatriculation</th>
+                        <td id="registration_number"></td>
+                    </tr>
+                    <tr>
+                        <th>Propriétaires</th>
+                        <td id="owner"></td>
+                    </tr>
+                    <tr>
+                        <th>Premier vol</th>
+                        <td id="first_flight_date"></td>
+                    </tr>
+                    <tr>
+                        <th>Nombre et type d'engins</th>
+                        <td id="engines"></td>
+                    </tr>
+                    <tr>
+                        <th>Statut</th>
+                        <td id="status"></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </section>
+    </div>
+</body>
+
 </html>
