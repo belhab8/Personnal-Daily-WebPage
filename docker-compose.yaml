@@ -31,6 +31,8 @@ services:
       container_name: daily-job
       environment:
         - AVIATIONSTACK_API_KEY=${AVIATIONSTACK_API_KEY}
+        - SUPABASE_URL=${SUPABASE_URL}
+        - SUPABASE_KEY=${SUPABASE_KEY}
       volumes:
         - ./data:/app/data
       restart: unless-stopped
