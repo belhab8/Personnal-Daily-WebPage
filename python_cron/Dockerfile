@@ -19,8 +19,5 @@ RUN echo "0 4 * * * python /app/scripts/generate_today_json.py >> /var/log/cron.
 # Applique les permissions requises
 RUN chmod 0644 /etc/cron.d/today-cron && crontab /etc/cron.d/today-cron
 
-# Dossier persistant
-VOLUME ["/app/data"]
-
 # Commande de démarrage : cron en avant-plan
 CMD ["cron", "-f"]
