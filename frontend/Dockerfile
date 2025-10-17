@@ -1,9 +1,9 @@
 FROM nginx:alpine
 COPY . /usr/share/nginx/html
 
-# Définit le port d'écoute automatiquement pour déploiement Railway
-RUN sed -i "s/listen 80;/listen ${PORT:-80};/" /etc/nginx/conf.d/default.conf
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
-EXPOSE ${PORT:-80}
+EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
