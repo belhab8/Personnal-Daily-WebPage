@@ -1,18 +1,18 @@
 {
-  "date": "17-10-2025",
-  "kanye": "For me to say I wasn't a genius I'd just be lying to you and to myself",
-  "catFact": "Purring not always means happiness. Purring could mean a cat is in terrible pain such as during childbirth. Kitten will purr to their mother to let her know they are getting enough milk while nursing. Purring is a process of inhaling and exhaling, usually performed while the mouth is closed. But don't worry, if your cat is purring while your gently petting her and holding her close to you - that is a happy cat!",
-  "catImg": "https://cataas.com/cat/7nVR77fsDnUXGf0A?position=center",
+  "date": "18-10-2025",
+  "kanye": "I feel calm but energized",
+  "catFact": "The first cat show was in 1871 at the Crystal Palace in London.",
+  "catImg": "https://cataas.com/cat/D0yQzH1gNbkh6xFt?position=center",
   "plane": {
     "engines_count": "2",
-    "engines_type": "JET",
-    "first_flight_date": "1991-05-05T22:00:00.000Z",
-    "owner": null,
-    "registration_number": "D-AIQE",
-    "model": "A320-211",
-    "production_line": "Airbus A318/A319/A32",
+    "engines_type": "TURBOPROP",
+    "first_flight_date": "1997-02-13T23:00:00.000Z",
+    "owner": "Wells Fargo Bank Northwest NA Trustee",
+    "registration_number": "N412XJ",
+    "model": "S340B (Plus)",
+    "production_line": "Saab 340",
     "status": "active",
-    "image": "https://t.plnspttrs.net/48888/857356_0c6c02cf23_280.jpg",
-    "photographer": "Imre Szabó"
+    "image": "https://t.plnspttrs.net/03883/952840_4e4be9457e_280.jpg",
+    "photographer": "KMCO Spotter"
   }
 }
